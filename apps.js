@@ -1,4 +1,12 @@
 // alert("Connected!");
+function userPlay() {
+    let input;
+
+    input = prompt("Enter paper, rock or scissor 5 times").toString();
+
+    return input.toLowerCase();
+}
+
 
 function computerPlay() {
     let particles = ["rock", "paper", "scissors"];
@@ -6,26 +14,23 @@ function computerPlay() {
     let max = particles.length;
     let randNum = Math.floor(Math.random() * Math.floor(max));
 
-    return particles[randNum];
+    return particles[randNum].toLowerCase();
 }
 
 function playRound(playerSelection, computerSelection) {
     let result;
-    
-    console.log(`playerSelection: ${playerSelection} 
-    computerSelection: ${computerSelection}`);
 
     // rock > scissors
     // paper > rock
     // scissors > paper
 
-    if(playerSelection === 'rock' && computerSelection === 'scissors') {
+    if (playerSelection === 'rock' && computerSelection === 'scissors') {
         result = `You win! ${playerSelection} beats ${computerSelection}`;
-    } else if(playerSelection === 'paper' && computerSelection == 'rock') {
+    } else if (playerSelection === 'paper' && computerSelection == 'rock') {
         result = `You win! ${playerSelection} beats ${computerSelection}`;
-    } else if(playerSelection === 'scissors' && computerSelection === 'paper') {
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
         `You win! ${playerSelection} beats ${computerSelection}`;
-    } else if(playerSelection === computerSelection) {
+    } else if (playerSelection === computerSelection) {
         result = `Draw! ${playerSelection} is the same as ${computerSelection}!`;
     } else {
         result = `You lose! ${computerSelection} beats ${playerSelection}`;
@@ -34,15 +39,40 @@ function playRound(playerSelection, computerSelection) {
     return result;
 }
 
-let computerSelection = computerPlay().toLowerCase();
+function game() {
+    let result;
+    let winOutcome = 0;
+    let loseOutcome = 0; 
+    let draw = 0;
 
-console.log(computerSelection);
+    for (let i = 0; i < 5; i++) {
+        const playerSelection = userPlay();
+        const computerSelection = computerPlay();
 
-let playerSelection = "paPer".toLowerCase();
-console.log(playerSelection);
+        result = playRound(playerSelection.toLowerCase(), computerSelection);
+        console.log(result);
 
-// playRound(playerSelection, computerPlay);
+        if (result.indexOf('win') >= 0) {
+            winOutcome += 1;
+        } else if (result.indexOf('lose') >= 0) {
+            loseOutcome += 1;
+        } else {
+            draw += 1;
+        }
+    }
 
-console.log(playRound(playerSelection, computerSelection));
+    console.log(`Win: ${winOutcome} | Lose: ${loseOutcome} | Draw: ${draw}`);
 
-// let result = playRound(playerSelection, computerSelection);
+
+
+    if(winOutcome > loseOutcome) {
+        console.log("You are the winner!");
+    } else if (winOutcome < loseOutcome) {
+        console.log("You lose!");
+    } else {
+        console.log("Draw!");
+    }
+
+}
+
+game();
